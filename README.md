@@ -6,12 +6,12 @@ Activity List:
 2.) Each environment must have its own remote state backend (S3) and state locking (DynamoDB). 
 3.) The codebase should be modular and reusable. 
 4.) The infra for each environment should have following services:
-    - 1 VPC with 2 public subnets and 2 private subnets
+    - 1 VPC with 3 public subnets and 3 private subnets
     - Internet Gateway, NAT Gateway(s), route tables
     - Security Groups (bastion/ssh, app/tcp 80/443)
     - 1 EC2 instance (web) in private subnet (with a bastion in public subnet for SSH)
-    - 1 S3 bucket for application data
-    - IAM role/policy for the EC2 instance to access S3
+    - 1 S3 bucket for application data -- need to do 
+    - IAM role/policy for the EC2 instance to access S3 need to do 
 
 Deliverables: 
 -------------
