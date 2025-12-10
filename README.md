@@ -150,3 +150,41 @@ Phase 4 - Additional Best Practices:
 
 - Use "terraform fmt" and "terraform validate" for linting.
 - Always use terraform plan before apply to validate the changes especially in production / critical envs
+
+
+To findout the cost of the infra we are provisioning please use open source infracost
+
+installation for the various platforms
+
+# Install Infracost
+brew install infracost  # macOS
+# or: curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+
+
+For Windows:
+bash# Install via Chocolatey
+choco install infracost
+
+# Or download directly
+curl -O https://github.com/infracost/infracost/releases/latest/download/infracost-windows-amd64.tar.gz
+tar -xzf infracost-windows-amd64.tar.gz
+
+# Authenticate
+infracost auth login
+
+
+
+# Generate Terraform plan
+terraform init
+terraform plan -out=tfplan.binary --var-file=dev.tfvars
+terraform show -json tfplan.binary > plan.json
+
+# Get cost breakdown
+Go into teh directory of the plan.json and run the below command.
+
+infracost breakdown --path .
+
+infracost breakdown --path . --format html > report.html
+
+# Compare changes
+infracost diff --path plan.json
