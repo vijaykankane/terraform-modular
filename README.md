@@ -3,8 +3,11 @@
 Activity List:
 --------------
 1.) Create a reusable Terraform codebase that provisions a complete environment in AWS for four environments (dev, qa, staging, prod). 
+
 2.) Each environment must have its own remote state backend (S3) and state locking (DynamoDB). 
+
 3.) The codebase should be modular and reusable. 
+
 4.) The infra for each environment should have following services:
     - 1 VPC with 3 public subnets and 3 private subnets
     - Internet Gateway, NAT Gateway(s), route tables
@@ -77,7 +80,12 @@ Phase 0 - Pre-reqs (one-time)
 - Terraform latest version installed
 - Create a S3 bucket and DynamoDB table for remote state locking:
     S3 bucket: <your-name>-terraform-state
+
+   aws s3 mb s3://capstone-g3-2026 --region eu-central-1
+
     DynamoDB table: Name "terraform-locks" with Partition key LockID (string)
+
+   aws dynamodb create-table --table-name capstone-g3-tfstate-lock --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --billing-mode PAY_PER_REQUEST --region eu-central-1
 
 
 Phase 1 - Create modules
@@ -102,6 +110,8 @@ Important: Each module will expose outputs for IDs required by other modules.
 
 Phase 2 - Environment directories, providers & remote state:
 ------------------------------------------------------------
+
+
 
 - Each envs/<env> folder contains all environment-specific configuration, including both provider configuration and backend (remote state + locking) in the providers.tf file.
 
